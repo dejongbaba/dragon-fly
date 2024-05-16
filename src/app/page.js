@@ -43,7 +43,7 @@ export default function Home() {
                 setLoading(false)
 
             } catch (e) {
-                console.log('e', e)
+                setLoading(false)
                 return Promise.reject(e)
             }
         }
@@ -64,6 +64,7 @@ export default function Home() {
                 setProcessLoading(false);
 
             } catch (e) {
+                setProcessLoading(false);
                 return Promise.reject(e)
             }
 
@@ -86,8 +87,9 @@ export default function Home() {
                 })
                 const statuses = await Promise.allSettled(statusArray)
                 setStatuses(statuses)
-                setStatusLoading(true)
+                setStatusLoading(false)
             } catch (e) {
+                setStatusLoading(false)
                 return Promise.reject(e)
             }
         }
