@@ -25,8 +25,10 @@ const generateUrl = () => {
 }
 /**
  *  upload file to aws
- *  @param uploadUrl,key,file
  *
+ * @param url - unsigned url generated
+ * @param key - key generated
+ * @param data - file from form input
  * */
 const stageFile = async (url, key, data) => {
 

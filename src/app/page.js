@@ -1,6 +1,6 @@
 'use client'
 import {useEffect, useState} from "react";
-import {accessProcess, checkFileStatus, fileToBinary, generateUrl, stageFile} from "@/services/files/files";
+import {accessProcess, checkFileStatus, generateUrl, stageFile} from "@/services/files/files";
 
 export default function Home() {
 
@@ -13,13 +13,10 @@ export default function Home() {
     const [taskIds, setTaskIds] = useState([]);
 
 
-    //    handle multiple files on change
+    //    handle single / multiple file selection
     const handleChange = async (event) => {
 
-        // const formData = new FormData();
-
         const files = event.target.files;
-        console.log('files outside', event, event.target, files, typeof files, files?.length)
 
         if (files.length) {
 
@@ -27,16 +24,15 @@ export default function Home() {
                 let filesArray = [];
                 setLoading(true)
                 for (let f of Object.entries(files)) {
-                    const binary = await fileToBinary(f)
+                    // const binary = await fileToBinary(f)
                     const formData = new FormData();
-                    formData.append("data", binary);
+                    formData.append("binary_data", f);
                     const {key, url} = await generateUrl();
                     // store keys to monitor file upload progress
                     setKeys([...keys, key])
-                    filesArray.push(stageFile(url, key, binary))
+                    filesArray.push(stageFile(url, key, formData))
                 }
 
-                console.log('files after processing ', files)
                 const uploadedFiles = await Promise.allSettled(filesArray);
 
                 setFileList(uploadedFiles);
